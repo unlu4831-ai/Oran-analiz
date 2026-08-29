@@ -10,8 +10,8 @@
     body { background-color: #f8fafc; font-size: 13px; }
     .nav-tabs .nav-link.active { font-weight: bold; background-color: #0f172a; color: #fff !important; }
     .nav-tabs .nav-link { color: #0f172a; }
-    .badge-iy { background-color: #3b82f6; }
-    .badge-ms { background-color: #10b981; }
+    .badge-iy { background-color: #3b82f6; color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 11px; }
+    .badge-ms { background-color: #10b981; color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 11px; }
   </style>
 </head>
 <body class="p-2 p-md-3">
@@ -27,15 +27,14 @@
     </ul>
 
     <div class="tab-content" id="analizTabContent">
-      <!-- 1. İDDİA (MS) ORAN ANALİZİ -->
       <div class="tab-pane fade show active" id="ms-analiz">
         <div class="card mb-3 border-0 bg-light">
           <div class="card-body p-2">
-            <h6 class="fw-bold mb-2">🔍 Maç Sonu Oran Filtreleme (J, K, L)</h6>
+            <h6 class="fw-bold mb-2">🔍 Maç Sonu Oran Filtreleme</h6>
             <div class="row g-2">
-              <div class="col-4"><input type="number" step="0.01" id="filterMS1" class="form-control form-control-sm" placeholder="MS 1 Oran"></div>
-              <div class="col-4"><input type="number" step="0.01" id="filterMSX" class="form-control form-control-sm" placeholder="MS X Oran"></div>
-              <div class="col-4"><input type="number" step="0.01" id="filterMS2" class="form-control form-control-sm" placeholder="MS 2 Oran"></div>
+              <div class="col-4"><input type="text" id="filterMS1" class="form-control form-control-sm" placeholder="MS 1 (Örn: 1.37 veya 1,37)"></div>
+              <div class="col-4"><input type="text" id="filterMSX" class="form-control form-control-sm" placeholder="MS X"></div>
+              <div class="col-4"><input type="text" id="filterMS2" class="form-control form-control-sm" placeholder="MS 2"></div>
             </div>
           </div>
         </div>
@@ -51,15 +50,14 @@
         </div>
       </div>
 
-      <!-- 2. İLK YARI ORAN ANALİZİ -->
       <div class="tab-pane fade" id="iy-analiz">
         <div class="card mb-3 border-0 bg-light">
           <div class="card-body p-2">
-            <h6 class="fw-bold mb-2">🔍 İlk Yarı Oran Filtreleme (G, H, I)</h6>
+            <h6 class="fw-bold mb-2">🔍 İlk Yarı Oran Filtreleme</h6>
             <div class="row g-2">
-              <div class="col-4"><input type="number" step="0.01" id="filterIY1" class="form-control form-control-sm" placeholder="İY 1 Oran"></div>
-              <div class="col-4"><input type="number" step="0.01" id="filterIYX" class="form-control form-control-sm" placeholder="İY X Oran"></div>
-              <div class="col-4"><input type="number" step="0.01" id="filterIY2" class="form-control form-control-sm" placeholder="İY 2 Oran"></div>
+              <div class="col-4"><input type="text" id="filterIY1" class="form-control form-control-sm" placeholder="İY 1"></div>
+              <div class="col-4"><input type="text" id="filterIYX" class="form-control form-control-sm" placeholder="İY X"></div>
+              <div class="col-4"><input type="text" id="filterIY2" class="form-control form-control-sm" placeholder="İY 2"></div>
             </div>
           </div>
         </div>
@@ -88,52 +86,81 @@
     const iySheetsCSV_URL = "https://docs.google.com/spreadsheets/d/14yjMc1-ANEtwiG9kkDbmiYSdM9Aa4x6Bl6w1QTJHXT0/gviz/tq?tqx=out:csv";
 
     $(document).ready(function() {
-      // MS Tablosu
+      // 1. İddia MS Tablosu
       Papa.parse(msSheetsCSV_URL, {
-        download: true, header: true,
+        download: true, header: false,
         complete: function(results) {
           let html = '';
-          results.data.forEach(r => {
-            if(r['MAÇ']) {
+          let data = results.data;
+          // Satırları gez (0. satır başlık olduğu için 1'den başlıyoruz)
+          for(let i = 1; i < data.length; i++) {
+            let row = data[i];
+            // Sütun sıralaması: B=1, C=2, D=3, E=4, G=6, H=7
+            if(row && row[1]) {
               html += `<tr>
-                <td class="fw-bold">${r['MAÇ']}</td>
-                <td>${r['MS 1'] || '-'}</td>
-                <td>${r['MS X'] || '-'}</td>
-                <td>${r['MS 2'] || '-'}</td>
-                <td><span class="badge badge-iy">${r['İY SKORU'] || '-'}</span></td>
-                <td><span class="badge badge-ms">${r['MS SKORU'] || '-'}</span></td>
+                <td class="fw-bold">${row[1] || '-'}</td>
+                <td>${row[2] || '-'}</td>
+                <td>${row[3] || '-'}</td>
+                <td>${row[4] || '-'}</td>
+                <td><span class="badge-iy">${row[6] || '-'}</span></td>
+                <td><span class="badge-ms">${row[7] || '-'}</span></td>
               </tr>`;
             }
-          });
+          }
           $('#msTabloGovde').html(html);
-          let msTable = $('#msOranTablosu').DataTable({ "paging": true, "pageLength": 25, "info": false });
-          $('#filterMS1').on('keyup change', function() { msTable.column(1).search(this.value ? '^' + this.value + '$' : '', true, false).draw(); });
-          $('#filterMSX').on('keyup change', function() { msTable.column(2).search(this.value ? '^' + this.value + '$' : '', true, false).draw(); });
-          $('#filterMS2').on('keyup change', function() { msTable.column(3).search(this.value ? '^' + this.value + '$' : '', true, false).draw(); });
+          let msTable = $('#msOranTablosu').DataTable({ 
+            "paging": true, "pageLength": 25, "info": false,
+            "language": { "zeroRecords": "Eşleşen maç bulunamadı", "search": "Hızlı Ara:" }
+          });
+
+          // Filtreleme Dinamikleri (Hem nokta hem virgül destekli)
+          function applySearch(val, colIdx, table) {
+            if(!val) { table.column(colIdx).search('').draw(); return; }
+            let normalized = val.replace(',', '.');
+            let regex = '^(' + val.replace('.', '\\.') + '|' + normalized.replace('.', ',') + ')$';
+            table.column(colIdx).search(regex, true, false).draw();
+          }
+
+          $('#filterMS1').on('keyup change', function() { applySearch(this.value, 1, msTable); });
+          $('#filterMSX').on('keyup change', function() { applySearch(this.value, 2, msTable); });
+          $('#filterMS2').on('keyup change', function() { applySearch(this.value, 3, msTable); });
         }
       });
 
-      // İY Tablosu
+      // 2. İlk Yarı Tablosu
       Papa.parse(iySheetsCSV_URL, {
-        download: true, header: true,
+        download: true, header: false,
         complete: function(results) {
           let html = '';
-          results.data.forEach(r => {
-            if(r['MAÇ']) {
+          let data = results.data;
+          for(let i = 1; i < data.length; i++) {
+            let row = data[i];
+            if(row && row[1]) {
               html += `<tr>
-                <td class="fw-bold">${r['MAÇ']}</td>
-                <td>${r['İY 1'] || '-'}</td>
-                <td>${r['İY X'] || '-'}</td>
-                <td>${r['İY 2'] || '-'}</td>
-                <td><span class="badge badge-iy">${r['İLK YARI SKOR'] || '-'}</span></td>
+                <td class="fw-bold">${row[1] || '-'}</td>
+                <td>${row[2] || '-'}</td>
+                <td>${row[3] || '-'}</td>
+                <td>${row[4] || '-'}</td>
+                <td><span class="badge-iy">${row[6] || '-'}</span></td>
               </tr>`;
             }
-          });
+          }
           $('#iyTabloGovde').html(html);
-          let iyTable = $('#iyOranTablosu').DataTable({ "paging": true, "pageLength": 25, "info": false });
-          $('#filterIY1').on('keyup change', function() { iyTable.column(1).search(this.value ? '^' + this.value + '$' : '', true, false).draw(); });
-          $('#filterIYX').on('keyup change', function() { iyTable.column(2).search(this.value ? '^' + this.value + '$' : '', true, false).draw(); });
-          $('#filterIY2').on('keyup change', function() { iyTable.column(3).search(this.value ? '^' + this.value + '$' : '', true, false).draw(); });
+          let iyTable = $('#iyOranTablosu').DataTable({ 
+            "paging": true, "pageLength": 25, "info": false,
+            "language": { "zeroRecords": "Eşleşen maç bulunamadı", "search": "Hızlı Ara:" }
+          });
+
+          function applySearchIY(val, colIdx, table) {
+            if(!val) { table.column(colIdx).search('').draw(); return; }
+            let normalized = val.replace(',', '.');
+            let regex = '^(' + val.replace('.', '\\.') + '|' + normalized.replace('.', ',') + ')$';
+            table.column(colIdx).search(regex, true, false).draw();
+          }
+
+          $('#filterIY1').on('keyup change', function() { applySearchIY(this.value, 1, iyTable); });
+          $('#filterIYX').on('keyup change', function() { applySearchIY(this.value, 2, iyTable); });
+          $('#filterIY2').on('keyup change', function() { applySearchIY(this.value, 3, iyTable); });
         }
       });
     });
