@@ -9,14 +9,12 @@
   <style>
     :root {
       --primary-blue: #0d6efd;
-      --light-blue: #e7f1ff;
       --border-blue: #b6d4fe;
     }
 
     body {
       background-color: #f4f7fa;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      color: #333;
       font-size: 13px;
     }
 
@@ -29,9 +27,6 @@
       margin-top: 5px;
     }
 
-    .nav-tabs {
-      border-bottom: 2px solid var(--border-blue);
-    }
     .nav-tabs .nav-link {
       color: #495057;
       font-weight: 600;
@@ -53,7 +48,6 @@
       vertical-align: middle;
       font-size: 12px;
       padding: 8px 4px;
-      white-space: nowrap;
     }
     .table tbody td {
       vertical-align: middle;
@@ -76,7 +70,6 @@
       padding: 3px 6px;
       border-radius: 4px;
       font-weight: 700;
-      font-size: 11px;
     }
     .badge-ms {
       background-color: #198754;
@@ -84,7 +77,6 @@
       padding: 3px 6px;
       border-radius: 4px;
       font-weight: 700;
-      font-size: 11px;
     }
   </style>
 </head>
@@ -146,7 +138,6 @@
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
   <script>
-    // CSV Bağlantıları (Google Sheets Yayın URL'lerin)
     const MS_CSV_URL = "https://docs.google.com/spreadsheets/d/1dtwbQFgdblHy84EFhnNT-N0lhce-jSX_IVCfQSaF_EI/gviz/tq?tqx=out:csv";
     const IY_CSV_URL = "https://docs.google.com/spreadsheets/d/14yjMc1-ANEtwiG9kkDbmiYSdM9Aa4x6Bl6w1QTJHXT0/gviz/tq?tqx=out:csv";
 
@@ -162,7 +153,7 @@
         language: { zeroRecords: "Orana uygun maç bulunamadı", search: "Sonuçlarda Ara:" }
       });
 
-      // MS TABLOSUNU OKUMA: M=12, N=13, O=14 (0 tabanlı indeks)
+      // MS TABLOSU: M=12 (Maç), N=13 (İY Skor), O=14 (MS Skor)
       Papa.parse(MS_CSV_URL, {
         download: true, header: false,
         complete: function(results) {
@@ -170,8 +161,7 @@
           dtMS.clear();
           for (let i = 1; i < data.length; i++) {
             let r = data[i];
-            // M Sütununda (r[12]) Maç ismi varsa ekle
-            if (r && r[12] && r[12].trim() !== "" && r[12] !== "FILTRE" && r[12] !== "FİLTRE") {
+            if (r && r[12] && r[12].trim() !== "" && !r[12].includes("FILTRE") && !r[12].includes("FİLTRE")) {
               let mac = `<div class="match-cell">${r[12]}</div>`;
               let iySkor = (r[13] && r[13].trim() !== "") ? `<span class="badge-iy">${r[13]}</span>` : '-';
               let msSkor = (r[14] && r[14].trim() !== "") ? `<span class="badge-ms">${r[14]}</span>` : '-';
@@ -183,7 +173,7 @@
         }
       });
 
-      // İY TABLOSUNU OKUMA: J=9, K=10 (0 tabanlı indeks)
+      // İY TABLOSU: J=9 (Maç), K=10 (İY Skor)
       Papa.parse(IY_CSV_URL, {
         download: true, header: false,
         complete: function(results) {
@@ -191,8 +181,7 @@
           dtIY.clear();
           for (let i = 1; i < data.length; i++) {
             let r = data[i];
-            // J Sütununda (r[9]) Maç ismi varsa ekle
-            if (r && r[9] && r[9].trim() !== "" && r[9] !== "FILTRE" && r[9] !== "FİLTRE") {
+            if (r && r[9] && r[9].trim() !== "" && !r[9].includes("FILTRE") && !r[9].includes("FİLTRE")) {
               let mac = `<div class="match-cell">${r[9]}</div>`;
               let iySkor = (r[10] && r[10].trim() !== "") ? `<span class="badge-iy">${r[10]}</span>` : '-';
 
