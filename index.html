@@ -1,169 +1,360 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Oran Analiz Platformu</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-  <style>
-    body { background-color: #f8fafc; font-size: 13px; }
-    .nav-tabs .nav-link.active { font-weight: bold; background-color: #0f172a; color: #fff !important; }
-    .nav-tabs .nav-link { color: #0f172a; }
-    .badge-iy { background-color: #3b82f6; color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 11px; }
-    .badge-ms { background-color: #10b981; color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 11px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oran Analiz Portalı</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0d6efd;
+            --light-blue: #e7f1ff;
+            --dark-blue: #0a58ca;
+            --border-blue: #b6d4fe;
+        }
+
+        body {
+            background-color: #f4f7fa;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #333;
+        }
+
+        .main-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(13, 110, 253, 0.08);
+            border: 1px solid var(--border-blue);
+            padding: 16px;
+            margin-top: 10px;
+        }
+
+        /* Nav Tab Mavi Tema */
+        .nav-tabs {
+            border-bottom: 2px solid var(--border-blue);
+        }
+        .nav-tabs .nav-link {
+            color: #495057;
+            font-weight: 600;
+            border: none;
+            border-bottom: 3px solid transparent;
+            padding: 10px 16px;
+        }
+        .nav-tabs .nav-link.active {
+            color: var(--primary-blue);
+            background-color: transparent;
+            border-bottom: 3px solid var(--primary-blue);
+        }
+
+        /* Filtre Kutuları Mavi Tema */
+        .filter-box {
+            background-color: var(--light-blue);
+            border: 1px solid var(--border-blue);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+        .filter-title {
+            color: var(--dark-blue);
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        /* Tablo Mavi Tasarım & Maç İsmi Düzenlemesi */
+        .table {
+            width: 100% !important;
+            border-collapse: collapse;
+        }
+        .table thead th {
+            background-color: var(--primary-blue) !important;
+            color: #ffffff !important;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+        .table tbody td {
+            vertical-align: middle;
+            text-align: center;
+            font-size: 0.88rem;
+            padding: 8px 4px;
+        }
+
+        /* Maç İsimlerinin Üst Üste Binmesini Önleme */
+        .match-name {
+            text-align: left !important;
+            white-space: normal !important;
+            word-wrap: break-word;
+            line-height: 1.3;
+            font-weight: 600;
+            color: #2c3e50;
+            min-width: 110px;
+            max-width: 140px;
+        }
+
+        /* Rozetler */
+        .badge-score-iy {
+            background-color: #0dcaf0;
+            color: #000;
+            font-weight: 700;
+            padding: 5px 8px;
+            border-radius: 6px;
+        }
+        .badge-score-ms {
+            background-color: #198754;
+            color: #fff;
+            font-weight: 700;
+            padding: 5px 8px;
+            border-radius: 6px;
+        }
+
+        /* Mobil Uyumluluk */
+        @media (max-width: 576px) {
+            .main-card { padding: 10px; }
+            .table tbody td { font-size: 0.82rem; }
+            .match-name { font-size: 0.82rem; min-width: 95px; }
+        }
+    </style>
 </head>
-<body class="p-2 p-md-3">
+<body>
 
-  <div class="container-fluid bg-white p-3 rounded shadow-sm">
-    <ul class="nav nav-tabs mb-3" id="analizTab" role="tablist">
-      <li class="nav-item">
-        <button class="nav-link active" id="ms-tab" data-bs-toggle="tab" data-bs-target="#ms-analiz" type="button">⚽ İddia (MS) Oran Analizi</button>
-      </li>
-      <li class="nav-item">
-        <button class="nav-link" id="iy-tab" data-bs-toggle="tab" data-bs-target="#iy-analiz" type="button">⏱️ İlk Yarı Oran Analizi</button>
-      </li>
-    </ul>
+<div class="container-fluid max-width-lg">
+    <div class="main-card">
+        
+        <ul class="nav nav-tabs mb-3" id="analizTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="ms-tab" data-bs-toggle="tab" data-bs-target="#ms-pane" type="button" role="tab">⚽ İddia (MS) Analizi</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="iy-tab" data-bs-toggle="tab" data-bs-target="#iy-pane" type="button" role="tab">⏱️ İlk Yarı Analizi</button>
+            </li>
+        </ul>
 
-    <div class="tab-content" id="analizTabContent">
-      <div class="tab-pane fade show active" id="ms-analiz">
-        <div class="card mb-3 border-0 bg-light">
-          <div class="card-body p-2">
-            <h6 class="fw-bold mb-2">🔍 Maç Sonu Oran Filtreleme</h6>
-            <div class="row g-2">
-              <div class="col-4"><input type="text" id="filterMS1" class="form-control form-control-sm" placeholder="MS 1 (Örn: 1.37 veya 1,37)"></div>
-              <div class="col-4"><input type="text" id="filterMSX" class="form-control form-control-sm" placeholder="MS X"></div>
-              <div class="col-4"><input type="text" id="filterMS2" class="form-control form-control-sm" placeholder="MS 2"></div>
+        <div class="tab-content" id="analizTabContent">
+            
+            <div class="tab-pane fade show active" id="ms-pane" role="tabpanel">
+                <div class="filter-box">
+                    <div class="filter-title">🔍 Maç Sonu Oran Filtreleme</div>
+                    <div class="row g-2">
+                        <div class="col-4">
+                            <input type="text" id="ms1_filter" class="form-control form-control-sm" placeholder="MS 1">
+                        </div>
+                        <div class="col-4">
+                            <input type="text" id="msx_filter" class="form-control form-control-sm" placeholder="MS X">
+                        </div>
+                        <div class="col-4">
+                            <input type="text" id="ms2_filter" class="form-control form-control-sm" placeholder="MS 2">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table id="msTable" class="table table-striped table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>MAÇ</th>
+                                <th>MS 1</th>
+                                <th>MS X</th>
+                                <th>MS 2</th>
+                                <th>İY SKOR</th>
+                                <th>MS SKOR</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="table-responsive">
-          <table id="msOranTablosu" class="table table-striped table-hover border align-middle w-100">
-            <thead class="table-dark">
-              <tr>
-                <th>MAÇ</th><th>MS 1</th><th>MS X</th><th>MS 2</th><th>İY SKOR</th><th>MS SKOR</th>
-              </tr>
-            </thead>
-            <tbody id="msTabloGovde"></tbody>
-          </table>
-        </div>
-      </div>
 
-      <div class="tab-pane fade" id="iy-analiz">
-        <div class="card mb-3 border-0 bg-light">
-          <div class="card-body p-2">
-            <h6 class="fw-bold mb-2">🔍 İlk Yarı Oran Filtreleme</h6>
-            <div class="row g-2">
-              <div class="col-4"><input type="text" id="filterIY1" class="form-control form-control-sm" placeholder="İY 1"></div>
-              <div class="col-4"><input type="text" id="filterIYX" class="form-control form-control-sm" placeholder="İY X"></div>
-              <div class="col-4"><input type="text" id="filterIY2" class="form-control form-control-sm" placeholder="İY 2"></div>
+            <div class="tab-pane fade" id="iy-pane" role="tabpanel">
+                <div class="filter-box">
+                    <div class="filter-title">🔍 İlk Yarı Oran Filtreleme</div>
+                    <div class="row g-2">
+                        <div class="col-4">
+                            <input type="text" id="iy1_filter" class="form-control form-control-sm" placeholder="İY 1">
+                        </div>
+                        <div class="col-4">
+                            <input type="text" id="iyx_filter" class="form-control form-control-sm" placeholder="İY X">
+                        </div>
+                        <div class="col-4">
+                            <input type="text" id="iy2_filter" class="form-control form-control-sm" placeholder="İY 2">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table id="iyTable" class="table table-striped table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>MAÇ</th>
+                                <th>İY 1</th>
+                                <th>İY X</th>
+                                <th>İY 2</th>
+                                <th>İY SKOR</th>
+                                <th>MS SKOR</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
-          </div>
+
         </div>
-        <div class="table-responsive">
-          <table id="iyOranTablosu" class="table table-striped table-hover border align-middle w-100">
-            <thead class="table-dark">
-              <tr>
-                <th>MAÇ</th><th>İY 1</th><th>İY X</th><th>İY 2</th><th>İY SKOR</th>
-              </tr>
-            </thead>
-            <tbody id="iyTabloGovde"></tbody>
-          </table>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
-  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
-  <script>
-    const msSheetsCSV_URL = "https://docs.google.com/spreadsheets/d/1dtwbQFgdblHy84EFhnNT-N0lhce-jSX_IVCfQSaF_EI/gviz/tq?tqx=out:csv";
-    const iySheetsCSV_URL = "https://docs.google.com/spreadsheets/d/14yjMc1-ANEtwiG9kkDbmiYSdM9Aa4x6Bl6w1QTJHXT0/gviz/tq?tqx=out:csv";
+<script>
+// Google Sheets CSV Linkleri
+const MS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT39h-9-M9e-BchXf8x5c1S1yJ83kFjF95R-pA78e2v5P49Wd-rS3R3Z0N/pub?gid=0&single=true&output=csv";
+const IY_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT39h-9-M9e-BchXf8x5c1S1yJ83kFjF95R-pA78e2v5P49Wd-rS3R3Z0N/pub?gid=12345678&single=true&output=csv"; // İY Tablo GID numaranız
 
-    $(document).ready(function() {
-      // 1. İddia MS Tablosu
-      Papa.parse(msSheetsCSV_URL, {
-        download: true, header: false,
-        complete: function(results) {
-          let html = '';
-          let data = results.data;
-          // Satırları gez (0. satır başlık olduğu için 1'den başlıyoruz)
-          for(let i = 1; i < data.length; i++) {
-            let row = data[i];
-            // Sütun sıralaması: B=1, C=2, D=3, E=4, G=6, H=7
-            if(row && row[1]) {
-              html += `<tr>
-                <td class="fw-bold">${row[1] || '-'}</td>
-                <td>${row[2] || '-'}</td>
-                <td>${row[3] || '-'}</td>
-                <td>${row[4] || '-'}</td>
-                <td><span class="badge-iy">${row[6] || '-'}</span></td>
-                <td><span class="badge-ms">${row[7] || '-'}</span></td>
-              </tr>`;
+function parseCSV(text) {
+    const lines = text.split('\n').filter(l => l.trim().length > 0);
+    return lines.map(line => {
+        let values = [];
+        let insideQuote = false;
+        let val = "";
+        for (let char of line) {
+            if (char === '"') {
+                insideQuote = !insideQuote;
+            } else if (char === ',' && !insideQuote) {
+                values.push(val.trim());
+                val = "";
+            } else {
+                val += char;
             }
-          }
-          $('#msTabloGovde').html(html);
-          let msTable = $('#msOranTablosu').DataTable({ 
-            "paging": true, "pageLength": 25, "info": false,
-            "language": { "zeroRecords": "Eşleşen maç bulunamadı", "search": "Hızlı Ara:" }
-          });
-
-          // Filtreleme Dinamikleri (Hem nokta hem virgül destekli)
-          function applySearch(val, colIdx, table) {
-            if(!val) { table.column(colIdx).search('').draw(); return; }
-            let normalized = val.replace(',', '.');
-            let regex = '^(' + val.replace('.', '\\.') + '|' + normalized.replace('.', ',') + ')$';
-            table.column(colIdx).search(regex, true, false).draw();
-          }
-
-          $('#filterMS1').on('keyup change', function() { applySearch(this.value, 1, msTable); });
-          $('#filterMSX').on('keyup change', function() { applySearch(this.value, 2, msTable); });
-          $('#filterMS2').on('keyup change', function() { applySearch(this.value, 3, msTable); });
         }
-      });
-
-      // 2. İlk Yarı Tablosu
-      Papa.parse(iySheetsCSV_URL, {
-        download: true, header: false,
-        complete: function(results) {
-          let html = '';
-          let data = results.data;
-          for(let i = 1; i < data.length; i++) {
-            let row = data[i];
-            if(row && row[1]) {
-              html += `<tr>
-                <td class="fw-bold">${row[1] || '-'}</td>
-                <td>${row[2] || '-'}</td>
-                <td>${row[3] || '-'}</td>
-                <td>${row[4] || '-'}</td>
-                <td><span class="badge-iy">${row[6] || '-'}</span></td>
-              </tr>`;
-            }
-          }
-          $('#iyTabloGovde').html(html);
-          let iyTable = $('#iyOranTablosu').DataTable({ 
-            "paging": true, "pageLength": 25, "info": false,
-            "language": { "zeroRecords": "Eşleşen maç bulunamadı", "search": "Hızlı Ara:" }
-          });
-
-          function applySearchIY(val, colIdx, table) {
-            if(!val) { table.column(colIdx).search('').draw(); return; }
-            let normalized = val.replace(',', '.');
-            let regex = '^(' + val.replace('.', '\\.') + '|' + normalized.replace('.', ',') + ')$';
-            table.column(colIdx).search(regex, true, false).draw();
-          }
-
-          $('#filterIY1').on('keyup change', function() { applySearchIY(this.value, 1, iyTable); });
-          $('#filterIYX').on('keyup change', function() { applySearchIY(this.value, 2, iyTable); });
-          $('#filterIY2').on('keyup change', function() { applySearchIY(this.value, 3, iyTable); });
-        }
-      });
+        values.push(val.trim());
+        return values;
     });
-  </script>
+}
+
+function cleanVal(v) {
+    if(!v || v === 'undefined') return '-';
+    return v.replace(/"/g, '').trim();
+}
+
+function normalizeOran(val) {
+    if (!val) return "";
+    return val.toString().replace('.', ',').trim();
+}
+
+$(document).ready(function() {
+    
+    // Esnek Oran Arama Fonksiyonu
+    $.fn.dataTable.ext.search.push(
+        function(settings, data, dataIndex) {
+            let tableId = settings.sTableId;
+            let val1 = "", valX = "", val2 = "";
+            
+            if (tableId === 'msTable') {
+                val1 = normalizeOran($('#ms1_filter').val());
+                valX = normalizeOran($('#msx_filter').val());
+                val2 = normalizeOran($('#ms2_filter').val());
+            } else if (tableId === 'iyTable') {
+                val1 = normalizeOran($('#iy1_filter').val());
+                valX = normalizeOran($('#iyx_filter').val());
+                val2 = normalizeOran($('#iy2_filter').val());
+            }
+
+            let col1 = normalizeOran(data[1]);
+            let colX = normalizeOran(data[2]);
+            let col2 = normalizeOran(data[3]);
+
+            if (val1 && !col1.startsWith(val1)) return false;
+            if (valX && !colX.startsWith(valX)) return false;
+            if (val2 && !col2.startsWith(val2)) return false;
+
+            return true;
+        }
+    );
+
+    // DataTables Başlatma
+    const msTable = $('#msTable').DataTable({
+        language: { url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json' },
+        pageLength: 25,
+        ordering: false,
+        responsive: true
+    });
+
+    const iyTable = $('#iyTable').DataTable({
+        language: { url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json' },
+        pageLength: 25,
+        ordering: false,
+        responsive: true
+    });
+
+    // MS Verilerini Yükle
+    fetch(MS_CSV_URL)
+        .then(res => res.text())
+        .then(csvText => {
+            const rows = parseCSV(csvText);
+            msTable.clear();
+            
+            // Başlık satırını atla (i = 1)
+            for(let i = 1; i < rows.length; i++) {
+                const r = rows[i];
+                if(r.length < 5) continue;
+
+                // Sütun Eşleşmeleri: A: Maç Adı, J: MS1, K: MSX, L: MS2, P: İY Skor, Q: MS Skor
+                let mac = `<div class="match-name">${cleanVal(r[0])}</div>`;
+                let ms1 = cleanVal(r[9]);
+                let msx = cleanVal(r[10]);
+                let ms2 = cleanVal(r[11]);
+                let iySkor = cleanVal(r[15]);
+                let msSkor = cleanVal(r[16]);
+
+                let iyBadge = iySkor !== '-' ? `<span class="badge-score-iy">${iySkor}</span>` : '-';
+                let msBadge = msSkor !== '-' ? `<span class="badge-score-ms">${msSkor}</span>` : '-';
+
+                msTable.row.add([mac, ms1, msx, ms2, iyBadge, msBadge]);
+            }
+            msTable.draw();
+        });
+
+    // İY Verilerini Yükle
+    fetch(IY_CSV_URL)
+        .then(res => res.text())
+        .then(csvText => {
+            const rows = parseCSV(csvText);
+            iyTable.clear();
+
+            for(let i = 1; i < rows.length; i++) {
+                const r = rows[i];
+                if(r.length < 5) continue;
+
+                let mac = `<div class="match-name">${cleanVal(r[0])}</div>`;
+                let iy1 = cleanVal(r[1] || r[9]);
+                let iyx = cleanVal(r[2] || r[10]);
+                let iy2 = cleanVal(r[3] || r[11]);
+                let iySkor = cleanVal(r[4] || r[15]);
+                let msSkor = cleanVal(r[5] || r[16]);
+
+                let iyBadge = iySkor !== '-' ? `<span class="badge-score-iy">${iySkor}</span>` : '-';
+                let msBadge = msSkor !== '-' ? `<span class="badge-score-ms">${msSkor}</span>` : '-';
+
+                iyTable.row.add([mac, iy1, iyx, iy2, iyBadge, msBadge]);
+            }
+            iyTable.draw();
+        });
+
+    // Filtre Tetikleyicileri
+    $('#ms1_filter, #msx_filter, #ms2_filter').on('keyup change', function() {
+        msTable.draw();
+    });
+
+    $('#iy1_filter, #iyx_filter, #iy2_filter').on('keyup change', function() {
+        iyTable.draw();
+    });
+});
+</script>
+
 </body>
 </html>
