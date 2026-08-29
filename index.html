@@ -3,7 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Oran Analiz Portalı</title>
+  
+  <!-- YENİ MARKA İLE SEO VE META ETİKETLERİ -->
+  <title>Ünlü Oran İddia Analiz Portalı - İddaa & İY Oran İstatistikleri</title>
+  <meta name="description" content="Ünlü Oran İddia Analiz Portalı: Yasal İddaa oran verileriyle geçmiş maç sonuçlarını karşılaştırın, gelecek maçlara ışık tutun.">
+  <meta name="keywords" content="ünlü oran analizi, ünlü iddia analiz, iddaa oran analizi, ilk yarı oran analizi, futbol istatistik">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Ünlü Oran İddia Analiz">
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
   <style>
@@ -50,14 +57,13 @@
       margin-bottom: 10px;
     }
 
-    /* Yatay Kaydırma İçin Sabit Genişlik Yapısı */
     .table-responsive {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
     }
 
     .table {
-      min-width: 550px !important; /* Tablonun mobilde ezilmesini engeller */
+      min-width: 550px !important;
       margin-bottom: 0;
     }
 
@@ -78,7 +84,6 @@
       white-space: nowrap;
     }
 
-    /* Maç İsmi Tek Satır */
     .match-cell {
       text-align: left !important;
       font-weight: 600;
@@ -87,9 +92,8 @@
       padding-left: 6px;
     }
 
-    /* Skor Rozetleri */
     .badge-iy {
-      background-color: #fd7e14; /* Canlı Turuncu/Amber */
+      background-color: #fd7e14;
       color: #fff;
       padding: 4px 8px;
       border-radius: 4px;
@@ -100,7 +104,7 @@
     }
 
     .badge-ms {
-      background-color: #198754; /* Yeşil */
+      background-color: #198754;
       color: #fff;
       padding: 4px 8px;
       border-radius: 4px;
@@ -108,6 +112,34 @@
       font-size: 12px;
       display: inline-block;
       white-space: nowrap !important;
+    }
+
+    /* FOOTER VE BİLGİLENDİRME ALANI */
+    .site-footer {
+      background: #ffffff;
+      border-top: 1px solid var(--border-blue);
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 15px;
+      font-size: 12px;
+      color: #6c757d;
+    }
+
+    .disclaimer-box {
+      background-color: #e7f1ff;
+      border: 1px solid var(--border-blue);
+      color: #0c4a6e;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .contact-link {
+      color: var(--primary-blue);
+      text-decoration: none;
+      font-weight: 600;
     }
   </style>
 </head>
@@ -180,6 +212,21 @@
 
       </div>
     </div>
+
+    <!-- SİTE ALTI BİLGİLENDİRME VE İLETİŞİM (FOOTER) -->
+    <footer class="site-footer text-center">
+      <div class="disclaimer-box text-start">
+        <strong>ℹ️ Bilgilendirme ve Sorumluluk Reddi:</strong> Bu platformda yer alan istatistiki veriler, resmi ve yasal İddaa bültenlerinden derlenen geçmiş oran bilgilerinden oluşmaktadır. Sitede sunulan oran filtrelemeleri ve veri analizleri <strong>kesin bir sonuç vaat etmez</strong>; yalnızca geçmiş istatistiklere dayanarak gelecek maçların analizi için kullanıcılara yol göstermeyi ve ışık tutmayı amaçlar. Burada yer alan bilgilere dayanarak işlem yapmak tamamen kullanıcının kendi sorumluluğundadır.
+      </div>
+      <div>
+        <span>📩 İş Birliği, Sponsorluk ve İletişim: </span>
+        <a href="mailto:unlu4831@gmail.com" class="contact-link">unlu4831@gmail.com</a>
+      </div>
+      <div class="mt-2 text-muted" style="font-size: 11px;">
+        © 2026 Ünlü Oran İddia Analiz Portalı - Tüm Hakkı Saklıdır.
+      </div>
+    </footer>
+
   </div>
 
   <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -212,7 +259,6 @@
         language: { zeroRecords: "Orana uygun maç bulunamadı", search: "Sonuçlarda Ara:" }
       });
 
-      // İDDİA (MS) VERİ ÇEKME
       Papa.parse(MS_CSV_URL, {
         download: true, header: false,
         complete: function(results) {
@@ -235,7 +281,6 @@
         }
       });
 
-      // İLK YARI VERİ ÇEKME
       Papa.parse(IY_CSV_URL, {
         download: true, header: false,
         complete: function(results) {
@@ -257,7 +302,6 @@
         }
       });
 
-      // BİREBİR ORAN FİLTRELEME
       $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
         if (settings.nTable.id !== 'msTable') return true;
         let fMS1 = cleanRate($('#ms1_filter').val());
