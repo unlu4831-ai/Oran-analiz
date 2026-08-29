@@ -49,6 +49,30 @@
       border-bottom: 3px solid var(--primary-blue);
     }
 
+    /* ÜST BİLGİLENDİRME VE İLETİŞİM KUTUSU */
+    .top-info-box {
+      background-color: #e7f1ff;
+      border: 1px solid var(--border-blue);
+      color: #0c4a6e;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .contact-badge {
+      display: inline-block;
+      background-color: #ffffff;
+      border: 1px solid var(--border-blue);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      color: var(--primary-blue);
+      text-decoration: none;
+      margin-top: 4px;
+    }
+
     .filter-box {
       background: var(--light-blue);
       border: 1px solid var(--border-blue);
@@ -113,34 +137,6 @@
       display: inline-block;
       white-space: nowrap !important;
     }
-
-    /* FOOTER VE BİLGİLENDİRME ALANI */
-    .site-footer {
-      background: #ffffff;
-      border-top: 1px solid var(--border-blue);
-      border-radius: 12px;
-      padding: 15px;
-      margin-top: 15px;
-      font-size: 12px;
-      color: #6c757d;
-    }
-
-    .disclaimer-box {
-      background-color: #e7f1ff;
-      border: 1px solid var(--border-blue);
-      color: #0c4a6e;
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 12px;
-      font-size: 11px;
-      line-height: 1.5;
-    }
-
-    .contact-link {
-      color: var(--primary-blue);
-      text-decoration: none;
-      font-weight: 600;
-    }
   </style>
 </head>
 <body class="p-1 p-md-3">
@@ -148,6 +144,7 @@
   <div class="container-fluid max-width-lg p-0">
     <div class="main-card">
       
+      <!-- SEKMELER -->
       <ul class="nav nav-tabs mb-2" id="analizTab" role="tablist">
         <li class="nav-item">
           <button class="nav-link active" id="ms-tab" data-bs-toggle="tab" data-bs-target="#ms-analiz" type="button">⚽ İddia (MS) Oran Analizi</button>
@@ -156,6 +153,17 @@
           <button class="nav-link" id="iy-tab" data-bs-toggle="tab" data-bs-target="#iy-analiz" type="button">⏱️ İlk Yarı Oran Analizi</button>
         </li>
       </ul>
+
+      <!-- ÜSTTE DİREKT GÖRÜNEN BİLGİLENDİRME VE GMAIL ALANI -->
+      <div class="top-info-box">
+        <div>
+          <strong>ℹ️ Bilgilendirme & Sorumluluk Reddi:</strong> Bu platformdaki veriler resmi yasal İddaa bültenlerinden derlenmiştir. Sunulan oran filtrelemeleri <strong>kesin bir sonuç vaat etmez</strong>, geçmiş istatistiklerle gelecek maçlara ışık tutmayı amaçlar.
+        </div>
+        <div>
+          <span>📩 İş Birliği & Reklam İletişim: </span>
+          <a href="mailto:unlu4831@gmail.com" class="contact-badge">unlu4831@gmail.com</a>
+        </div>
+      </div>
 
       <div class="tab-content" id="analizTabContent">
         
@@ -212,21 +220,6 @@
 
       </div>
     </div>
-
-    <!-- SİTE ALTI BİLGİLENDİRME VE İLETİŞİM (FOOTER) -->
-    <footer class="site-footer text-center">
-      <div class="disclaimer-box text-start">
-        <strong>ℹ️ Bilgilendirme ve Sorumluluk Reddi:</strong> Bu platformda yer alan istatistiki veriler, resmi ve yasal İddaa bültenlerinden derlenen geçmiş oran bilgilerinden oluşmaktadır. Sitede sunulan oran filtrelemeleri ve veri analizleri <strong>kesin bir sonuç vaat etmez</strong>; yalnızca geçmiş istatistiklere dayanarak gelecek maçların analizi için kullanıcılara yol göstermeyi ve ışık tutmayı amaçlar. Burada yer alan bilgilere dayanarak işlem yapmak tamamen kullanıcının kendi sorumluluğundadır.
-      </div>
-      <div>
-        <span>📩 İş Birliği, Sponsorluk ve İletişim: </span>
-        <a href="mailto:unlu4831@gmail.com" class="contact-link">unlu4831@gmail.com</a>
-      </div>
-      <div class="mt-2 text-muted" style="font-size: 11px;">
-        © 2026 Ünlü Oran İddia Analiz Portalı - Tüm Hakkı Saklıdır.
-      </div>
-    </footer>
-
   </div>
 
   <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
