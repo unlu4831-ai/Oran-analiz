@@ -50,56 +50,64 @@
       margin-bottom: 10px;
     }
 
-    .table { width: 100% !important; margin-bottom: 0; table-layout: fixed; }
+    /* Yatay Kaydırma İçin Sabit Genişlik Yapısı */
+    .table-responsive {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .table {
+      min-width: 550px !important; /* Tablonun mobilde ezilmesini engeller */
+      margin-bottom: 0;
+    }
+
     .table thead th {
       background-color: var(--primary-blue) !important;
       color: #ffffff !important;
       text-align: center;
       vertical-align: middle;
-      font-size: 11px;
-      padding: 8px 2px;
+      font-size: 12px;
+      padding: 10px 4px;
+      white-space: nowrap;
     }
     .table tbody td {
       vertical-align: middle;
       text-align: center;
-      padding: 6px 2px;
-      font-size: 12px;
+      padding: 8px 4px;
+      font-size: 13px;
+      white-space: nowrap;
     }
 
-    /* Maç alanının düzgün yayılması */
+    /* Maç İsmi Tek Satır */
     .match-cell {
       text-align: left !important;
       font-weight: 600;
       color: #1a252f;
-      white-space: normal !important;
-      word-break: break-word;
-      line-height: 1.25;
-      padding-left: 4px;
+      white-space: nowrap !important;
+      padding-left: 6px;
     }
 
-    /* Skor Rozetleri Düzeltmesi */
+    /* Skor Rozetleri */
     .badge-iy {
-      background-color: #fd7e14; /* Yeni Canlı Turuncu/Amber Tonu */
+      background-color: #fd7e14; /* Canlı Turuncu/Amber */
       color: #fff;
-      padding: 4px 5px;
+      padding: 4px 8px;
       border-radius: 4px;
       font-weight: 700;
-      font-size: 11px;
+      font-size: 12px;
       display: inline-block;
-      white-space: nowrap !important; /* Skorun alt alta binmesini kesin engeller */
-      min-width: 32px;
+      white-space: nowrap !important;
     }
 
     .badge-ms {
-      background-color: #198754; /* Koyu Yeşil */
+      background-color: #198754; /* Yeşil */
       color: #fff;
-      padding: 4px 5px;
+      padding: 4px 8px;
       border-radius: 4px;
       font-weight: 700;
-      font-size: 11px;
+      font-size: 12px;
       display: inline-block;
       white-space: nowrap !important;
-      min-width: 32px;
     }
   </style>
 </head>
@@ -132,10 +140,10 @@
             <table id="msTable" class="table table-striped table-hover border align-middle">
               <thead>
                 <tr>
-                  <th style="width: 42%;">MAÇ</th>
-                  <th style="width: 12%;">MS 1</th>
-                  <th style="width: 12%;">MS X</th>
-                  <th style="width: 12%;">MS 2</th>
+                  <th style="width: 45%;">MAÇ</th>
+                  <th style="width: 11%;">MS 1</th>
+                  <th style="width: 11%;">MS X</th>
+                  <th style="width: 11%;">MS 2</th>
                   <th style="width: 11%;">İYK</th>
                   <th style="width: 11%;">MSK</th>
                 </tr>
@@ -158,10 +166,10 @@
             <table id="iyTable" class="table table-striped table-hover border align-middle">
               <thead>
                 <tr>
-                  <th style="width: 49%;">MAÇ</th>
-                  <th style="width: 13%;">İY 1</th>
-                  <th style="width: 13%;">İY X</th>
-                  <th style="width: 13%;">İY 2</th>
+                  <th style="width: 52%;">MAÇ</th>
+                  <th style="width: 12%;">İY 1</th>
+                  <th style="width: 12%;">İY X</th>
+                  <th style="width: 12%;">İY 2</th>
                   <th style="width: 12%;">İYK</th>
                 </tr>
               </thead>
