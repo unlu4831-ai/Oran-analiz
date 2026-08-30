@@ -4,9 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- YENİ MARKA İLE SEO VE META ETİKETLERİ -->
   <title>Ünlü Oran İddia Analiz Portalı - İddaa & İY Oran İstatistikleri</title>
-  <meta name="description" content="Ünlü Oran İddia Analiz Portalı: Yasal İddaa oran verileriyle geçmiş maç sonuçlarını karşılaştırın, gelecek maçlara ışık tutun.">
+  <meta name="description" content="Ünlü Oran İddia Analiz Portalı: Yasal İddaa oran verileriyle geçmiş maç sonuçlarını karşılaştırın.">
   <meta name="keywords" content="ünlü oran analizi, ünlü iddia analiz, iddaa oran analizi, ilk yarı oran analizi, futbol istatistik">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Ünlü Oran İddia Analiz">
@@ -18,6 +17,7 @@
       --primary-blue: #0d6efd;
       --light-blue: #e7f1ff;
       --border-blue: #b6d4fe;
+      --dark-blue: #0a3663;
     }
 
     body {
@@ -26,13 +26,56 @@
       font-size: 13px;
     }
 
+    /* EN ÜSTTEKİ BAŞLIK VE UYARI PANOSU */
+    .header-info-card {
+      background-color: #ffffff;
+      border: 1px solid var(--border-blue);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 12px rgba(13, 110, 253, 0.06);
+    }
+
+    .site-brand-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary-blue);
+      margin-bottom: 8px;
+    }
+
+    .disclaimer-text {
+      font-size: 11px;
+      color: #495057;
+      line-height: 1.5;
+      background-color: var(--light-blue);
+      padding: 8px 12px;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary-blue);
+      margin-bottom: 8px;
+    }
+
+    .contact-bar {
+      font-size: 11px;
+      color: #6c757d;
+    }
+
+    .contact-email {
+      color: var(--primary-blue);
+      font-weight: 700;
+      text-decoration: none;
+      background: var(--light-blue);
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border-blue);
+    }
+
     .main-card {
       background: #ffffff;
       border-radius: 12px;
       box-shadow: 0 4px 16px rgba(13, 110, 253, 0.08);
       border: 1px solid var(--border-blue);
       padding: 10px;
-      margin-top: 5px;
     }
 
     .nav-tabs .nav-link {
@@ -47,30 +90,6 @@
       color: var(--primary-blue);
       background-color: transparent;
       border-bottom: 3px solid var(--primary-blue);
-    }
-
-    /* ÜST BİLGİLENDİRME VE İLETİŞİM KUTUSU */
-    .top-info-box {
-      background-color: #e7f1ff;
-      border: 1px solid var(--border-blue);
-      color: #0c4a6e;
-      border-radius: 8px;
-      padding: 10px 12px;
-      margin-bottom: 12px;
-      font-size: 11px;
-      line-height: 1.5;
-    }
-
-    .contact-badge {
-      display: inline-block;
-      background-color: #ffffff;
-      border: 1px solid var(--border-blue);
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-weight: 700;
-      color: var(--primary-blue);
-      text-decoration: none;
-      margin-top: 4px;
     }
 
     .filter-box {
@@ -142,6 +161,20 @@
 <body class="p-1 p-md-3">
 
   <div class="container-fluid max-width-lg p-0">
+    
+    <!-- EN ÜSTTE SABİT DURAN BİLGİLENDİRME VE İLETİŞİM ALANI -->
+    <div class="header-info-card">
+      <div class="site-brand-title">Ünlü Oran İddia Analiz Portalı</div>
+      <div class="disclaimer-text">
+        <strong>⚠️ Bilgilendirme & Yasal Uyarı:</strong> Bu platformda sunulan veriler sadece geçmiş maç istatistiklerini incelemek amacıyla yasal bültenlerden derlenmiştir. Kesin sonuç vaat etmez. <strong>Sitemiz bahis/iddaa oynamayı teşvik etmez, özendirmez ve bahis oynatmaz.</strong> Bahis oynamak finansal kayıplara ve bağımlılığa yol açabilir.
+      </div>
+      <div class="contact-bar d-flex justify-content-between align-items-center flex-wrap">
+        <span>📩 İş Birliği & İletişim: <a href="mailto:unlu4831@gmail.com" class="contact-email">unlu4831@gmail.com</a></span>
+        <span class="text-muted" style="font-size: 10px;">© 2026 Tüm Hakları Saklıdır.</span>
+      </div>
+    </div>
+
+    <!-- TABLO VE ANALİZ KARTI -->
     <div class="main-card">
       
       <!-- SEKMELER -->
@@ -153,17 +186,6 @@
           <button class="nav-link" id="iy-tab" data-bs-toggle="tab" data-bs-target="#iy-analiz" type="button">⏱️ İlk Yarı Oran Analizi</button>
         </li>
       </ul>
-
-      <!-- ÜSTTE DİREKT GÖRÜNEN BİLGİLENDİRME VE GMAIL ALANI -->
-      <div class="top-info-box">
-        <div>
-          <strong>ℹ️ Bilgilendirme & Sorumluluk Reddi:</strong> Bu platformdaki veriler resmi yasal İddaa bültenlerinden derlenmiştir. Sunulan oran filtrelemeleri <strong>kesin bir sonuç vaat etmez</strong>, geçmiş istatistiklerle gelecek maçlara ışık tutmayı amaçlar.
-        </div>
-        <div>
-          <span>📩 İş Birliği & Reklam İletişim: </span>
-          <a href="mailto:unlu4831@gmail.com" class="contact-badge">unlu4831@gmail.com</a>
-        </div>
-      </div>
 
       <div class="tab-content" id="analizTabContent">
         
