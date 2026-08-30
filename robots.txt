@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://unlu4831-ai.github.io/Oran-analiz/sitemap.xml
