@@ -5,10 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Ünlü Oran İddia Analiz Portalı - İddaa & İY Oran İstatistikleri</title>
-  <meta name="description" content="Ünlü Oran İddia Analiz Portalı: Yasal İddaa kapanış oran verileriyle geçmiş maç sonuçlarını karşılaştırın.">
+  <meta name="description" content="Ünlü Oran İddia Analiz Portalı: Yasal İddaa kapanış oran verileriyle geçmiş maç sonuçlarını karşılaştırın, gelecek maç analizlerinize ışık tutun.">
   <meta name="keywords" content="ünlü oran analizi, ünlü iddia analiz, iddaa kapanış oran analizi, ilk yarı oran analizi, futbol istatistik">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Ünlü Oran İddia Analiz">
+
+  <!-- GOOGLE SEARCH CONSOLE DOĞRULAMA ETİKETİ -->
+  <!-- <meta name="google-site-verification" content="BURAYA_SEARCH_CONSOLE_KODU_GELECEK" /> -->
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
@@ -26,7 +29,6 @@
       font-size: 13px;
     }
 
-    /* EN ÜSTTEKİ BAŞLIK VE UYARI PANOSU */
     .header-info-card {
       background-color: #ffffff;
       border: 1px solid var(--border-blue);
@@ -59,10 +61,10 @@
       background-color: #fff3cd;
       color: #664d03;
       border: 1px solid #ffe69c;
-      padding: 8px 12px;
+      padding: 10px 12px;
       border-radius: 8px;
-      font-size: 11px;
-      line-height: 1.5;
+      font-size: 11.5px;
+      line-height: 1.6;
       margin-bottom: 8px;
     }
 
@@ -71,14 +73,24 @@
       color: #6c757d;
     }
 
-    .contact-email {
-      color: var(--primary-blue);
-      font-weight: 700;
-      text-decoration: none;
-      background: var(--light-blue);
+    .contact-btn-email {
+      color: #198754;
+      border: 1px solid #198754;
+      background: #e8f5e9;
       padding: 3px 8px;
       border-radius: 6px;
-      border: 1px solid var(--border-blue);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .contact-btn-x {
+      color: #000000;
+      border: 1px solid #000000;
+      background: #f8f9fa;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      text-decoration: none;
     }
 
     .main-card {
@@ -173,23 +185,30 @@
 
   <div class="container-fluid max-width-lg p-0">
     
+    <!-- EN ÜSTTE SABİT DURAN BİLGİLENDİRME VE İLETİŞİM ALANI -->
     <div class="header-info-card">
       <div class="site-brand-title">Ünlü Oran İddia Analiz Portalı</div>
       
       <div class="disclaimer-text">
-        <strong>⚠️ Bilgilendirme & Yasal Uyarı:</strong> Bu platformda yer alan veriler resmi ve yasal İddaa bültenlerinden derlenmiştir. Girilen oranlar kesin bir sonuç vaat etmez. <strong>Sitemiz bahis/iddaa oynamayı teşvik etmez, özendirmez ve bahis oynatmaz.</strong> Bahis oynamak finansal kayıplara ve bağımlılığa yol açabilir.
+        <strong>⚠️ Bilgilendirme & Yasal Uyarı:</strong> Bu platformda sunulan veriler; gelecek maçların analizine ışık tutmak, geçmişte aynı oranlarla sahadan nasıl senaryolar çıktığını incelemek amacıyla resmi ve yasal İddaa bültenlerinden derlenmiştir. Sitede sunulan oran filtrelemeleri kesin bir sonuç vaat etmez; tamamen geçmiş istatistiklere dayanır. <strong>Sitemiz bahis/iddaa oynamayı teşvik etmez, özendirmez ve bahis oynatmaz.</strong> Bahis oynamak finansal kayıplara ve bağımlılığa yol açabilir.
       </div>
 
       <div class="closing-odds-alert">
-        <strong>📌 Önemli Analiz İpucu:</strong> Veritabanımızdaki oranlar, maçların başlamasına <strong>2-3 dakika kala alınan son kapanış oranları (Closing Odds)</strong> ile kaydedilip maç bitiminde skorları işlenmektedir. Sağlıklı bir analiz yapmak için oran filtrelemelerini maç başlamadan hemen önceki son güncel kapanış oranlarına göre yapmanız tavsiye edilir.
+        <strong>📌 Analiz Yöntemi ve Kapanış Oranı İpucu:</strong> Sitemizdeki veritabanı; geçmişte oynanan maçların başlamasına az bir süre kala dondurulan <strong>son kapanış oranları (Closing Odds)</strong> ile oluşturulmıştır. Oynanacak bir maçın analizini yaparken; iddaa bülteninin oran dondurma süresine göre (maça 2-3 dakika, 10-15 dakika ya da bazen yarım saat kala) oluşan <strong>en son güncel kapanış oranlarını</strong> baz alarak filtreleme yapmanız tavsiye edilir. Bu sayede geçmişte aynı kapanış oranlarına sahip takımların nasıl sonuçlar aldığını ve ne tür senaryolar gerçekleştiğini net bir şekilde görebilirsiniz.
       </div>
 
-      <div class="contact-bar d-flex justify-content-between align-items-center flex-wrap">
-        <span>📩 İş Birliği & İletişim: <a href="mailto:unlu4831@gmail.com" class="contact-email">unlu4831@gmail.com</a></span>
-        <span class="text-muted" style="font-size: 10px;">© 2026 Tüm Hakları Saklıdır.</span>
+      <!-- İLETİŞİM ALANI: E-POSTA VE X HESABI (@LeonMaykkk) -->
+      <div class="contact-bar d-flex justify-content-between align-items-center flex-wrap pt-2 border-top">
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+          <strong>📩 İş Birliği & Reklam İletişim:</strong>
+          <a href="mailto:unlu4831@gmail.com" class="contact-btn-email">unlu4831@gmail.com</a>
+          <a href="https://x.com/LeonMaykkk" target="_blank" class="contact-btn-x">𝕏 @LeonMaykkk</a>
+        </div>
+        <span class="text-muted ms-auto" style="font-size: 10px;">© 2026 Tüm Hakları Saklıdır.</span>
       </div>
     </div>
 
+    <!-- TABLO VE ANALİZ KARTI -->
     <div class="main-card">
       
       <ul class="nav nav-tabs mb-2" id="analizTab" role="tablist">
@@ -197,4 +216,181 @@
           <button class="nav-link active" id="ms-tab" data-bs-toggle="tab" data-bs-target="#ms-analiz" type="button">⚽ İddia (MS) Oran Analizi</button>
         </li>
         <li class="nav-item">
-          <button class="nav-link" id="iy-tab" data-bs-toggle="tab" data-bs-target="#iy-analiz" type="button">
+          <button class="nav-link" id="iy-tab" data-bs-toggle="tab" data-bs-target="#iy-analiz" type="button">⏱️ İlk Yarı Oran Analizi</button>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="analizTabContent">
+        
+        <div class="tab-pane fade show active" id="ms-analiz">
+          <div class="filter-box">
+            <div class="row g-2">
+              <div class="col-4"><input type="text" id="ms1_filter" class="form-control form-control-sm text-center" placeholder="MS 1"></div>
+              <div class="col-4"><input type="text" id="msx_filter" class="form-control form-control-sm text-center" placeholder="MS X"></div>
+              <div class="col-4"><input type="text" id="ms2_filter" class="form-control form-control-sm text-center" placeholder="MS 2"></div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table id="msTable" class="table table-striped table-hover border align-middle">
+              <thead>
+                <tr>
+                  <th style="width: 45%;">MAÇ</th>
+                  <th style="width: 11%;">MS 1</th>
+                  <th style="width: 11%;">MS X</th>
+                  <th style="width: 11%;">MS 2</th>
+                  <th style="width: 11%;">İYK</th>
+                  <th style="width: 11%;">MSK</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="iy-analiz">
+          <div class="filter-box">
+            <div class="row g-2">
+              <div class="col-4"><input type="text" id="iy1_filter" class="form-control form-control-sm text-center" placeholder="İY 1"></div>
+              <div class="col-4"><input type="text" id="iyx_filter" class="form-control form-control-sm text-center" placeholder="İY X"></div>
+              <div class="col-4"><input type="text" id="iy2_filter" class="form-control form-control-sm text-center" placeholder="İY 2"></div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table id="iyTable" class="table table-striped table-hover border align-middle">
+              <thead>
+                <tr>
+                  <th style="width: 52%;">MAÇ</th>
+                  <th style="width: 12%;">İY 1</th>
+                  <th style="width: 12%;">İY X</th>
+                  <th style="width: 12%;">İY 2</th>
+                  <th style="width: 12%;">İYK</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+  <script>
+    const MS_CSV_URL = "https://docs.google.com/spreadsheets/d/1dtwbQFgdblHy84EFhnNT-N0lhce-jSX_IVCfQSaF_EI/gviz/tq?tqx=out:csv";
+    const IY_CSV_URL = "https://docs.google.com/spreadsheets/d/14yjMc1-ANEtwiG9kkDbmiYSdM9Aa4x6Bl6w1QTJHXT0/gviz/tq?tqx=out:csv";
+
+    function cleanRate(val) {
+      if(!val) return "";
+      let s = val.toString().trim().replace(',', '.');
+      let n = parseFloat(s);
+      if(isNaN(n)) return "";
+      return n.toFixed(2);
+    }
+
+    $(document).ready(function() {
+      
+      let dtMS = $('#msTable').DataTable({
+        paging: true, pageLength: 25, info: false, ordering: false,
+        language: { zeroRecords: "Orana uygun maç bulunamadı", search: "Sonuçlarda Ara:" }
+      });
+
+      let dtIY = $('#iyTable').DataTable({
+        paging: true, pageLength: 25, info: false, ordering: false,
+        language: { zeroRecords: "Orana uygun maç bulunamadı", search: "Sonuçlarda Ara:" }
+      });
+
+      Papa.parse(MS_CSV_URL, {
+        download: true, header: false,
+        complete: function(results) {
+          let data = results.data;
+          dtMS.clear();
+          for (let i = 1; i < data.length; i++) {
+            let r = data[i];
+            if (r && r[1] && r[1].trim() !== "" && r[1] !== "MAÇ") {
+              let mac = `<div class="match-cell">${r[1]}</div>`;
+              let ms1 = cleanRate(r[2]);
+              let msx = cleanRate(r[3]);
+              let ms2 = cleanRate(r[4]);
+              let iySkor = (r[6] && r[6].trim() !== "") ? `<span class="badge-iy">${r[6]}</span>` : '-';
+              let msSkor = (r[7] && r[7].trim() !== "") ? `<span class="badge-ms">${r[7]}</span>` : '-';
+
+              dtMS.row.add([mac, ms1, msx, ms2, iySkor, msSkor]);
+            }
+          }
+          dtMS.draw();
+        }
+      });
+
+      Papa.parse(IY_CSV_URL, {
+        download: true, header: false,
+        complete: function(results) {
+          let data = results.data;
+          dtIY.clear();
+          for (let i = 1; i < data.length; i++) {
+            let r = data[i];
+            if (r && r[1] && r[1].trim() !== "" && r[1] !== "MAÇ") {
+              let mac = `<div class="match-cell">${r[1]}</div>`;
+              let iy1 = cleanRate(r[2]);
+              let iyx = cleanRate(r[3]);
+              let iy2 = cleanRate(r[4]);
+              let iySkor = (r[5] && r[5].trim() !== "") ? `<span class="badge-iy">${r[5]}</span>` : '-';
+
+              dtIY.row.add([mac, iy1, iyx, iy2, iySkor]);
+            }
+          }
+          dtIY.draw();
+        }
+      });
+
+      $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+        if (settings.nTable.id !== 'msTable') return true;
+        let fMS1 = cleanRate($('#ms1_filter').val());
+        let fMSX = cleanRate($('#msx_filter').val());
+        let fMS2 = cleanRate($('#ms2_filter').val());
+
+        let rowMS1 = cleanRate(data[1]);
+        let rowMSX = cleanRate(data[2]);
+        let rowMS2 = cleanRate(data[3]);
+
+        if (fMS1 !== "" && rowMS1 !== fMS1) return false;
+        if (fMSX !== "" && rowMSX !== fMSX) return false;
+        if (fMS2 !== "" && rowMS2 !== fMS2) return false;
+
+        return true;
+      });
+
+      $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+        if (settings.nTable.id !== 'iyTable') return true;
+        let fIY1 = cleanRate($('#iy1_filter').val());
+        let fIYX = cleanRate($('#iyx_filter').val());
+        let fIY2 = cleanRate($('#iy2_filter').val());
+
+        let rowIY1 = cleanRate(data[1]);
+        let rowIYX = cleanRate(data[2]);
+        let rowIY2 = cleanRate(data[3]);
+
+        if (fIY1 !== "" && rowIY1 !== fIY1) return false;
+        if (fIYX !== "" && rowIYX !== fIYX) return false;
+        if (fIY2 !== "" && rowIY2 !== fIY2) return false;
+
+        return true;
+      });
+
+      $('#ms1_filter, #msx_filter, #ms2_filter').on('keyup change clear', function() {
+        dtMS.draw();
+      });
+
+      $('#iy1_filter, #iyx_filter, #iy2_filter').on('keyup change clear', function() {
+        dtIY.draw();
+      });
+
+    });
+  </script>
+</body>
+</html>
